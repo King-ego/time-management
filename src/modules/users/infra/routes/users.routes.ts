@@ -10,4 +10,9 @@ usersRoutes.post(
     userController.create
 );
 
+usersRoutes.get(
+    "/",
+    userController.index
+);
+
 export default usersRoutes;

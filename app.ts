@@ -2,7 +2,7 @@ import "reflect-metadata";
 import express, {Request, Response, NextFunction} from "express";
 import cors from "cors";
 import routes from "./src/shared/infra/routes";
-import primaClient from "./src/shared/infra/primaClient";
+import primaClient from "./src/shared/infra/prismaClient";
 import {errors} from "celebrate";
 import AppError from "./src/shared/error";
 

@@ -1,6 +1,5 @@
-import {Prisma} from "@prisma/client";
-
-import PrimaClient from "../../../shared/infra/primaClient";
+import PrimaClient from "../../../shared/infra/prismaClient";
+import User from "@modules/users/entities/User";
 
 interface IRequestCreateUser {
     name: string;
@@ -9,7 +8,7 @@ interface IRequestCreateUser {
 }
 
 class CreateUserService {
-    public async execute({password, email, name}: IRequestCreateUser): Promise<Prisma> {
+    public async execute({password, email, name}: IRequestCreateUser): Promise<User> {
         const user =  await PrimaClient.user.create({
             data: {
                 name,
@@ -18,7 +17,7 @@ class CreateUserService {
             }
         })
 
-        return user;
+        return (user as unknown) as User;
     }
 }
 

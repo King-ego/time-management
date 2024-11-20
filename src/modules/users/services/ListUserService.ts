@@ -1,4 +1,4 @@
-import primaClient from "../../../shared/infra/primaClient";
+import primaClient from "../../../shared/infra/prismaClient";
 import {Prisma} from "@prisma/client";
 
 class ListUserService {

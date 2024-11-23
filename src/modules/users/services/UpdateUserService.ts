@@ -1,7 +1,8 @@
-import PrismaClient from "../../../shared/infra/prismaClient";
+import User from "@modules/users/entities/User";
 import AppError from "@shared/error";
 
-import User from "@modules/users/entities/User";
+import IUserRepository from "@modules/users/repositories/IUserRepository";
+import UserRepository from "@modules/users/prisma/repositories/UserRepository";
 
 interface IRequestUpdateUser {
     name: string;
@@ -9,27 +10,21 @@ interface IRequestUpdateUser {
 }
 
 class UpdateUserService {
+    private userRepository: IUserRepository;
+
+    constructor() {
+        this.userRepository = new UserRepository
+    }
+
     public async execute({user_id, name}: IRequestUpdateUser): Promise<User> {
-        const existUser = await PrismaClient.user.findFirst({
-            where: {
-                id: user_id,
-            }
-        });
+        const existUser = await this.userRepository.findById(user_id);
 
         if (!existUser) {
             throw new AppError("User not found", 404);
         }
 
-       const user =  await PrismaClient.user.update({
-            where: {
-                id: user_id
-            },
-            data: {
-                name
-            }
-        });
+        return this.userRepository.update({user_id, name});
 
-       return ( user as unknown ) as User;
     }
 }
 

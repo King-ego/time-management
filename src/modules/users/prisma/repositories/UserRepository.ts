@@ -2,17 +2,13 @@ import prismaClient from "@shared/infra/prismaClient";
 import IUserRepository from "@modules/users/repositories/IUserRepository";
 import User from "@modules/users/entities/User";
 import IUpdateUserDTO from "@modules/users/dto/IUpdateUserDTO";
-import user from "@modules/users/entities/User";
 import PrismaClient from "@shared/infra/prismaClient";
 
 class UserRepository implements IUserRepository {
     public async create(name: string, email: string, password: string): Promise<User> {
+        const data = {name, email, password};
         const user = await prismaClient.user.create({
-            data: {
-                name,
-                email,
-                password
-            }
+            data
         });
 
         return (user as unknown) as User;
